@@ -26,5 +26,10 @@ router.post('/player', PlayerControler.create)
 router.put('/player', PlayerControler.update)
 router.delete('/player', PlayerControler.delete)
 
+//routes for teamMaker
+router.get('/teamMaker', TestEventControler.View)
+router.post('/teamMaker', PlayerControler.setTeam)
+router.delete('/teamMaker', PlayerControler.setTeam)
+
 // export router module
 module.exports = router;

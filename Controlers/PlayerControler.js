@@ -1,5 +1,7 @@
-//import Player model
-require("../Models/PlayerModel")
+const db = require('../models/index');
+const Group = db.TestEvent;
+const User = db.Player;
+
 //import response functions
 require("express/lib/response");
 
@@ -86,4 +88,16 @@ exports.update = function (req, res){
     .catch(err => {
     res.status(500).json({ message: err.message })
     })
+}
+exports.setTeam = function (req, res){
+    if(!req.body.test_id){
+        req.body.test_id = null
+    }
+    Player.update({ test_id: req.body.test_id},{where: {firstname : req.body.firstname, surname : req.body.surname}})
+    .then(data => {
+    res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json({ message: err.message })
+        })
 }

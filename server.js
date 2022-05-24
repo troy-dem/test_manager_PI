@@ -5,7 +5,8 @@ let cors = require('cors')
 //import router
 let routes = require('./router');
 //import sequelize
-sequelize = require('./db.js');
+const Sequelize = require('sequelize')
+const db = require('./db.js')
 
 // Initialize the app
 let app = express();
@@ -16,7 +17,7 @@ app.use(cors())
 // configure router
 app.use('/', routes)
 //configure sequelize
-sequelize.sync()
+db.sync()
 
 // Setup server port
 let port = 3000;

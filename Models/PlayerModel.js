@@ -15,4 +15,5 @@ surname: { type: Sequelize.STRING, allowNull: false },
 age: { type: Sequelize.INTEGER, allowNull: false },
 education: { type: Sequelize.STRING, allowNull: false }
 })
+//make an association 1:N between TestEvent and Player
 module.exports = Player

@@ -1,5 +1,7 @@
-//import TestEvent model
-require("../Models/TestEventModel")
+const db = require('../models/index');
+const Group = db.TestEvent;
+const User = db.Player;
+
 //import response functions
 require("express/lib/response");
 
