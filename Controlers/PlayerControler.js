@@ -8,18 +8,18 @@ require("express/lib/response");
 exports.listAll = async function (req, res){
     let criterias = new Object();
     if (req.body.firstname){
-        criterias.dateTime = req.body.firstname
+        criterias.firstname = req.body.firstname
     }
     if (req.body.surname){
-        criterias.completionTime = req.body.surname
+        criterias.surname = req.body.surname
     }
     if (req.body.age){
-        criterias.successRate = req.body.age
+        criterias.age = req.body.age
     }
     if (req.body.education){
-        criterias.successRate = req.body.education
+        criterias.education = req.body.education
     }
-    Player.findAll({ attributes: ['firstname','surname','age','education'], where: criterias} )
+    Player.findAll({ attributes: ['player_id','firstname','surname','age','education'], where: criterias} )
     .then(data => {
     res.json(data);
     })

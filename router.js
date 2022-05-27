@@ -12,6 +12,7 @@ var PlayerControler = require("./Controlers/PlayerControler");
 
 //routes for Tests
 router.get('/tests', TestEventControler.listAll)
+router.post('/tests', TestEventControler.listAll)
 
 //routes for Test
 router.get('/test', TestEventControler.View)
@@ -20,7 +21,7 @@ router.put('/test', TestEventControler.update)
 router.delete('/test', TestEventControler.delete)
 
 //routes for Player
-router.get('/player/list', PlayerControler.listAll)
+router.post('/player/list', PlayerControler.listAll)
 router.get('/player', PlayerControler.View)
 router.post('/player', PlayerControler.create)
 router.put('/player', PlayerControler.update)

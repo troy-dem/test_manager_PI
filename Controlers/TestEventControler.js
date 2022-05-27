@@ -5,11 +5,17 @@ const User = db.Player;
 //import response functions
 require("express/lib/response");
 
+const { Op } = require("sequelize");
+
 
 exports.listAll = async function (req, res){
     let criterias = new Object();
     if (req.body.dateTime){
-        criterias.dateTime = req.body.dateTime
+        var newDate = new Date(req.body.dateTime)
+        offset = newDate.getTimezoneOffset()
+        newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
+        criterias.dateTime = newDate
+        console.log(criterias.dateTime)
     }
     if (req.body.completionTime){
         criterias.completionTime = req.body.completionTime
@@ -17,7 +23,7 @@ exports.listAll = async function (req, res){
     if (req.body.successRate){
         criterias.successRate = req.body.successRate
     }
-    TestEvent.findAll({ attributes: ['dateTime','completionTime','successRate'],where: criterias} )
+    TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate'],where: criterias} )
     .then(data => {
     res.json(data);
     })
@@ -66,8 +72,12 @@ exports.create = async function (req, res){
     })
 }
 
-exports.delete = function (req, res){
-    TestEvent.destroy({where: {dateTime : req.body.dateTime}})
+exports.delete = function (req, res){ 
+    var newDate = new Date(req.body.dateTime)
+    offset = newDate.getTimezoneOffset()
+    newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
+    console.log(newDate)
+    TestEvent.destroy({where: {test_id : req.body.test_id}})
     .then(data => {
         res.json(data);
     })
@@ -77,11 +87,15 @@ exports.delete = function (req, res){
 }
 
 exports.update = function (req, res){
-    TestEvent.update({ dateTime: req.body.dateTime, 
+    var newDate = new Date(req.body.dateTime)
+    offset = newDate.getTimezoneOffset()
+    newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
+    console.log(newDate)
+    TestEvent.update({   dateTime: newDate, 
                          completionTime: req.body.completionTime, 
-                         successRate: req.body.successRate },{where: {dateTime : req.body.dateTime}})
+                         successRate: req.body.successRate },{where: {test_id : req.body.test_id}})
     .then(data => {
-        res.json("Update Successful");
+        res.json(data);
     })
     .catch(err => {
     res.status(500).json({ message: err.message })
