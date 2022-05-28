@@ -102,7 +102,6 @@ exports.update = function (req, res){
 }
 
 exports.getTeam = function (req, res){
-    console.log("get Team called")
     TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate'], include: {model: Player, as: "players", attributes: ['player_id','firstname','surname','age','education']}, where: {test_id: req.body.test_id} }).then(data => {
         res.json(data);
         })

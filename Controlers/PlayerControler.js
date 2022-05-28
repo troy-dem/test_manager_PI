@@ -89,11 +89,19 @@ exports.update = function (req, res){
     res.status(500).json({ message: err.message })
     })
 }
+
 exports.setTeam = function (req, res){
-    if(!req.body.test_id){
-        req.body.test_id = null
-    }
-    Player.update({ test_id: req.body.test_id},{where: {player_id: player_id}})
+    Player.update({ test_id: req.body.test_id},{where: {player_id: req.body.player_id}})
+    .then(data => {
+    res.json(data);
+    })
+    .catch(err => {
+        res.status(500).json({ message: err.message })
+        })
+}
+
+exports.removeTeam = function (req, res){
+    Player.update({ test_id: null},{where: {player_id: req.body.player_id}})
     .then(data => {
     res.json(data);
     })
