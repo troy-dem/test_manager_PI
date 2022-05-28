@@ -93,7 +93,7 @@ exports.setTeam = function (req, res){
     if(!req.body.test_id){
         req.body.test_id = null
     }
-    Player.update({ test_id: req.body.test_id},{where: {firstname : req.body.firstname, surname : req.body.surname}})
+    Player.update({ test_id: req.body.test_id},{where: {player_id: player_id}})
     .then(data => {
     res.json(data);
     })

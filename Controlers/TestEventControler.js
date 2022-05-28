@@ -1,11 +1,10 @@
 const db = require('../models/index');
-const Group = db.TestEvent;
-const User = db.Player;
 
 //import response functions
 require("express/lib/response");
 
 const { Op } = require("sequelize");
+const { TestEvent, Player } = require('../models/index');
 
 
 exports.listAll = async function (req, res){
@@ -100,4 +99,14 @@ exports.update = function (req, res){
     .catch(err => {
     res.status(500).json({ message: err.message })
     })
+}
+
+exports.getTeam = function (req, res){
+    console.log("get Team called")
+    TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate'], include: {model: Player, as: "players", attributes: ['player_id','firstname','surname','age','education']}, where: {test_id: req.body.test_id} }).then(data => {
+        res.json(data);
+        })
+        .catch(err => {
+        res.status(500).json({ message: err.message })
+        })
 }
