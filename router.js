@@ -10,24 +10,22 @@ router.use(bodyParser.urlencoded({ extended: true }));
 var TestEventControler = require("./Controlers/TestEventControler");
 var PlayerControler = require("./Controlers/PlayerControler");
 
-//routes for Tests
-router.get('/tests', TestEventControler.listAll)
-router.post('/tests', TestEventControler.listAll)
+//route for Home
+router.get('/level', TestEventControler.getLevel)
 
 //routes for Test
-router.get('/test', TestEventControler.View)
+router.post('/test/list', TestEventControler.listAll)
 router.post('/test', TestEventControler.create)
 router.put('/test', TestEventControler.update)
 router.delete('/test', TestEventControler.delete)
 
 //routes for Player
 router.post('/player/list', PlayerControler.listAll)
-router.get('/player', PlayerControler.View)
 router.post('/player', PlayerControler.create)
 router.put('/player', PlayerControler.update)
 router.delete('/player', PlayerControler.delete)
 
-//routes for teamMaker
+//routes for team magement
 router.post('/test/team', TestEventControler.getTeam)
 router.post('/player/team', PlayerControler.setTeam)
 router.delete('/player/team', PlayerControler.removeTeam)

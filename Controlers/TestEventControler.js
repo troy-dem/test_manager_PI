@@ -5,6 +5,7 @@ require("express/lib/response");
 
 const { Op } = require("sequelize");
 const { TestEvent, Player } = require('../models/index');
+const { range } = require('express/lib/request');
 
 
 exports.listAll = async function (req, res){
@@ -108,4 +109,21 @@ exports.getTeam = function (req, res){
         .catch(err => {
         res.status(500).json({ message: err.message })
         })
+}
+
+exports.getLevel = function (req, res){
+    TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate']} )
+    .then(data => {
+        var meanTime = 0;
+        var meanSuccess = 0;
+        for (let i = 0; i < data.length; i++){
+            meanTime += +(data[i].completionTime.split(":")[1])
+            meanSuccess += data[i].successRate
+        }
+        meanTime = meanTime/data.length
+        meanSuccess = meanSuccess/data.length
+        var level = Math.floor(((Math.floor((meanTime/4))-1)+(Math.floor(5-(+(meanSuccess/20)))))/2)
+        console.log((Math.floor((meanTime/4))-1)+" "+(Math.floor(5-(+(meanSuccess/20))))+" "+" level: "+(+level))  
+        res.json(level);
+    })
 }
