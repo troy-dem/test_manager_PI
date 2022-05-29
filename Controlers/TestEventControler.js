@@ -1,11 +1,7 @@
-const db = require('../models/index');
-
 //import response functions
 require("express/lib/response");
 
-const { Op } = require("sequelize");
 const { TestEvent, Player } = require('../models/index');
-const { range } = require('express/lib/request');
 
 
 exports.listAll = async function (req, res){
@@ -24,26 +20,6 @@ exports.listAll = async function (req, res){
         criterias.successRate = req.body.successRate
     }
     TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate'],where: criterias} )
-    .then(data => {
-    res.json(data);
-    })
-    .catch(err => {
-    res.status(500).json({ message: err.message })
-    })
-}
-
-exports.View = async function (req, res){
-    let criterias = new Object();
-    if (req.body.dateTime){
-        criterias.dateTime = req.body.dateTime
-    }
-    if (req.body.completionTime){
-        criterias.completionTime = req.body.completionTime
-    }
-    if (req.body.successRate){
-        criterias.successRate = req.body.successRate
-    }
-    TestEvent.findOne({ attributes: ['dateTime','completionTime','successRate'],where: criterias} )
     .then(data => {
     res.json(data);
     })
