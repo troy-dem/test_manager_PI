@@ -28,29 +28,6 @@ exports.listAll = async function (req, res){
     })
 }
 
-exports.View = async function (req, res){
-    let criterias = new Object();
-    if (req.body.firstname){
-        criterias.firstname = req.body.firstname
-    }
-    if (req.body.surname){
-        criterias.surname = req.body.surname
-    }
-    if (req.body.age){
-        criterias.age = req.body.age
-    }
-    if (req.body.education){
-        criterias.education = req.body.education
-    }
-    Player.findOne({ attributes: ['firstname','surname','age','education'], where: criterias} )
-    .then(data => {
-    res.json(data);
-    })
-    .catch(err => {
-    res.status(500).json({ message: err.message })
-    })
-}
-
 exports.create = async function (req, res){
     // create non persistant object
     let player = Player.build({ firstname: req.body.firstname, 
