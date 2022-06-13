@@ -5,8 +5,11 @@ const { TestEvent, Player } = require('../models/index');
 
 
 exports.listAll = async function (req, res){
+    //create a dictionnary of search filters 
     let criterias = new Object();
+    //set the value of each search filter if present in the request
     if (req.body.dateTime){
+        //research by date not fully implemented yet
         var newDate = new Date(req.body.dateTime)
         offset = newDate.getTimezoneOffset()
         newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
@@ -19,6 +22,7 @@ exports.listAll = async function (req, res){
     if (req.body.successRate){
         criterias.successRate = req.body.successRate
     }
+    //filtered search
     TestEvent.findAll({ attributes: ['test_id','dateTime','completionTime','successRate'],where: criterias} )
     .then(data => {
     res.json(data);
@@ -29,11 +33,6 @@ exports.listAll = async function (req, res){
 }
 
 exports.create = async function (req, res){
-    //format dateTime
-    if (!req.body.dateTime){
-        req.body.dateTime = new Date().getTime()
-    }
-
     // create non persistant object
     let test = TestEvent.build({ dateTime: req.body.dateTime, 
                                  completionTime: req.body.completionTime, 
@@ -49,10 +48,7 @@ exports.create = async function (req, res){
 }
 
 exports.delete = function (req, res){ 
-    var newDate = new Date(req.body.dateTime)
-    offset = newDate.getTimezoneOffset()
-    newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
-    console.log(newDate)
+    // delete object from DB
     TestEvent.destroy({where: {test_id : req.body.test_id}})
     .then(data => {
         res.json(data);
@@ -64,9 +60,11 @@ exports.delete = function (req, res){
 
 exports.update = function (req, res){
     var newDate = new Date(req.body.dateTime)
+    //convert time
     offset = newDate.getTimezoneOffset()
     newDate.setUTCMinutes(newDate.getUTCMinutes()-offset).toString()
     console.log(newDate)
+    // update object in DB
     TestEvent.update({   dateTime: newDate, 
                          completionTime: req.body.completionTime, 
                          successRate: req.body.successRate },{where: {test_id : req.body.test_id}})

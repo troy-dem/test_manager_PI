@@ -5,13 +5,10 @@ let cors = require('cors')
 //import router
 let routes = require('./router');
 //import sequelize
-const Sequelize = require('sequelize')
 const db = require('./db.js')
 
 // Initialize the app
 let app = express();
-// Send message for default URL
-app.get('/', (request, response) => response.send('Hello World !'));
 //configure cors
 app.use(cors())
 // configure router

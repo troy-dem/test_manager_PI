@@ -1,6 +1,4 @@
 const db = require('../models/index');
-const Group = db.TestEvent;
-const User = db.Player;
 
 //import response functions
 require("express/lib/response");
@@ -45,6 +43,7 @@ exports.create = async function (req, res){
 }
 
 exports.delete = function (req, res){
+    // delete object from DB
     Player.destroy({where: {firstname: req.body.firstname, surname: req.body.surname}})
     .then(data => {
         res.json(data);
@@ -55,6 +54,7 @@ exports.delete = function (req, res){
 }
 
 exports.update = function (req, res){
+    // update object in DB
     Player.update({ firstname: req.body.firstname, 
                     surname: req.body.surname, 
                     age: req.body.age,
