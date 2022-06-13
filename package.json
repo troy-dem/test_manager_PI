@@ -1,0 +1,25 @@
+{
+  "name": "backend_pi",
+  "version": "1.0.0",
+  "description": "Plateforme d'encodage de la campagne de test du PI de 2022 développée dans le cadre du cours d'architecture web [4eiaw40]",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/troy-dem/test_manager_PI.git"
+  },
+  "author": "",
+  "license": "Apache-2.0",
+  "bugs": {
+    "url": "https://github.com/troy-dem/test_manager_PI/issues"
+  },
+  "homepage": "https://github.com/troy-dem/test_manager_PI#readme",
+  "dependencies": {
+    "cors": "^2.8.5",
+    "express": "^4.18.1",
+    "mysql2": "^2.3.3",
+    "sequelize": "^6.19.2"
+  }
+}

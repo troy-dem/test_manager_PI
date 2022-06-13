@@ -1,0 +1,470 @@
+openapi: 3.0.0
+info:
+  version: '1.0'
+  title: 'testManagerPI'
+  license:
+    name: Apache 2.0
+    url: https://www.apache.org/licenses/LICENSE-2.0.html
+servers:
+  - url: 'localhost:3000'
+paths:
+    /level:
+        get:
+            summary: 'get the level of the escape game'
+            operationId: GetLevel
+            responses:
+                '200':
+                    description: 'Sample response: Level of the escape game'
+                    content:
+                        application/json:
+                            schema:
+                                type: integer
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /test/list:
+        post:
+            summary: 'get a list of all test events'
+            operationId: listTestEvents
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TestEvent'
+                        examples:
+                            testC:
+                                summary: Create a TestEvent instance
+                                value: {"successRate": 100} 
+            responses:
+                '200':
+                    description: 'Sample response: List of all TestEvents'
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/TestEvent'
+                            examples:
+                                testA:
+                                    summary: get list of TestEvent instances
+                                    value:  [{"test_id": 3,
+                                            "dateTime": "2013-06-05 00:15:00",
+                                            "completionTime": "00:17:00",
+                                            "successRate": 100},{
+                                            "test_id": 5,
+                                            "dateTime": "2013-06-15 13:42:00",
+                                            "completionTime": "00:19:00",
+                                            "successRate": 100
+                                            }]
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /test:
+        post:
+            summary: "Create a new TestEvent"
+            operationId: CreateTest
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TestEvent'
+                        examples:
+                            testC:
+                                summary: Create a TestEvent instance
+                                value: {"dateTime": "2022-04-01T22:04:01.000Z",
+                                        "completionTime": "00:12:00",
+                                        "successRate": 35} 
+            responses:
+                    '200':
+                        description: 'Sample response: TestEvent'
+                        content:
+                            application/json:
+                                schema:
+                                        $ref: '#/components/schemas/TestEvent'
+                                examples:
+                                    testC:
+                                        summary: get a TestEvent instance
+                                        value: {"test_id": 6,
+                                                "dateTime": "2022-04-01T22:04:01.000Z",
+                                                "completionTime": "00:12:00",
+                                                "successRate": 35}
+                    default:
+                        description: Unexpected error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Error'
+        put:
+            summary: "Update a TestEvent"
+            operationId: UpdateTest
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TestEvent'
+                        examples:
+                            testC:
+                                summary: Update a TestEvent instance
+                                value: {"test_id": 6,
+                                        "dateTime": "2022-04-01T22:04:01.000Z",
+                                        "completionTime": "00:12:00",
+                                        "successRate": 45}
+            responses:
+                    '200':
+                        description: 'Sample response: TestEvent'
+                        content:
+                            application/json:
+                                schema:
+                                        $ref: '#/components/schemas/TestEvent'
+                                examples:
+                                    testU:
+                                        summary: get a TestEvent instance
+                                        value: {"test_id": 6,
+                                                "dateTime": "2022-04-01T22:04:01.000Z",
+                                                "completionTime": "00:12:00",
+                                                "successRate": 45}
+                    default:
+                        description: Unexpected error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Error'
+        delete:
+            summary: "Delete a TestEvent"
+            operationId: DeleteTestEvent
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/TestEvent'
+                        examples:
+                            testC:
+                                summary: Delete a TestEvent instance
+                                value: {"test_id": 6,
+                                        "dateTime": "2022-04-01T22:04:01.000Z",
+                                        "completionTime": "00:12:00",
+                                        "successRate": 35}
+            responses:
+                '200':
+                    description: 'Sample response: delete a TestEvent'
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /player/list:
+        post:
+            summary: "List all Players"
+            operationId: ListPlayer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            type: array
+                            items:
+                                $ref: '#/components/schemas/Player'
+                        examples:
+                            testPlayer:
+                                summary: Players details
+                                value: {"surname": "Dem"}
+            responses:
+                    '200':
+                        description: 'Sample response: Player'
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Player'
+                                examples:
+                                    testPlayers:
+                                        summary: Players details
+                                        value: [{"player_id": 1,
+                                                "firstname": "Louis",
+                                                "surname": "Dem",
+                                                "age": 22,
+                                                "education": "Admin"},{
+                                                "player_id": 2,
+                                                "firstname": "Amandine",
+                                                "surname": "Dem",
+                                                "age": 24,
+                                                "education": "ingénieur"
+                                                }]
+                    default:
+                        description: Unexpected error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Error'
+    /player:
+        post:
+            summary: "Create a new Player"
+            operationId: CreatePlayer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Player'
+                            examples:
+                                testPlayer:
+                                    summary: Player's details
+                                    value: {"firstname": "John",
+                                            "surname": "Doe",
+                                            "age": 22,
+                                            "education": "Tester"}
+            responses:
+                    '200':
+                        description: 'Sample response: Player'
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Player'
+                                examples:
+                                    testPlayer:
+                                        summary: Player's details
+                                        value: {"player_id": 7,
+                                                "firstname": "John",
+                                                "surname": "Doe",
+                                                "age": 22,
+                                                "education": "Tester"}
+                    default:
+                        description: Unexpected error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Error'
+        put:
+            summary: "Update a Player"
+            operationId: UpdatePlayer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: '#/components/schemas/Player'
+                            examples:
+                                testPlayer:
+                                    summary: Player's details
+                                    value: {"player_id": 7,
+                                            "firstname": "John",
+                                            "surname": "Doe",
+                                            "age": 22,
+                                            "education": "Historian"}
+            responses:
+                    '200':
+                        description: 'Sample response: Player'
+                        content:
+                            application/json:
+                                schema:
+                                        $ref: '#/components/schemas/Player'
+                                examples:
+                                    testPlayer:
+                                        summary: Player's details
+                                        value: {"player_id": 7,
+                                                "firstname": "John",
+                                                "surname": "Doe",
+                                                "age": 22,
+                                                "education": "Historian"}
+                    default:
+                        description: Unexpected error
+                        content:
+                            application/json:
+                                schema:
+                                    $ref: '#/components/schemas/Error'
+        delete:
+            summary: "Delete a Player"
+            operationId: DeletePlayer
+            requestBody:
+                content:
+                    application/json:
+                        schema:
+                            $ref: "#/components/schemas/Player"
+                            examples:
+                                testPlayer:
+                                    summary: Player's details
+                                    value: {"player_id": 7,
+                                            "firstname": "John",
+                                            "surname": "Doe",
+                                            "age": 22,
+                                            "education": "Tester"}
+            responses:
+                '200':
+                    description: 'Sample response: delete a Player'
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /test/team:
+        post:
+            summary: 'Show team members'
+            operationId: GetTeam
+            requestBody:
+                content:
+                    'application/json':
+                        schema:
+                            $ref: "#/components/schemas/teamInfo"
+                        examples:
+                             teamInfo1:
+                                        summary: test_id, player_id pair
+                                        value: {"test_id": 2}
+
+            responses:
+                '200':
+                    description: 'Sample response: Manage a team'
+                    content:
+                        application/json:
+                            schema:
+                                type: array
+                                items:
+                                    $ref: '#/components/schemas/Player'
+                            examples:
+                                testPlayer:
+                                    summary: team members details
+                                    value: [{"player_id": 1,
+                                                "firstname": "Louis",
+                                                "surname": "Dem",
+                                                "age": 22,
+                                                "education": "Admin"},{
+                                                "player_id": 2,
+                                                "firstname": "Amandine",
+                                                "surname": "Dem",
+                                                "age": 24,
+                                                "education": "ingénieur"
+                                                }]
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+    /player/team:
+        post:
+            summary: 'Add Player to a Team'
+            operationId: SetTeam
+            requestBody:
+                content:
+                    'application/json':
+                        schema:
+                            $ref: "#/components/schemas/teamInfo"
+                        examples:
+                             teamInfo1:
+                                        summary: test_id, player_id pair
+                                        value: {"player_id": 2}
+
+            responses:
+                '200':
+                    description: 'Sample response: Manage a team'
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Player'
+                            examples:
+                                testPlayer:
+                                    summary: team members details
+                                    value: {"player_id": 1,
+                                                "firstname": "Louis",
+                                                "surname": "Dem",
+                                                "age": 22,
+                                                "education": "Admin"}
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+        delete:
+            summary: 'Remove Player from a Team'
+            operationId: DeleteFromTeam
+            requestBody:
+                content:
+                    'application/json':
+                        schema:
+                            $ref: "#/components/schemas/teamInfo"
+                        examples:
+                             teamInfo1:
+                                        summary: test_id, player_id pair
+                                        value: {"player_id": 2}
+            responses:
+                '200':
+                    description: 'Sample response: Manage a team'
+                    content:
+                        application/json:
+                            schema:
+                                type: string
+                default:
+                    description: Unexpected error
+                    content:
+                        application/json:
+                            schema:
+                                $ref: '#/components/schemas/Error'
+components:
+  schemas:
+    TestEvent:
+      type: object
+      required:
+        - test_id
+      properties:
+        test_id:
+          type: integer
+        dateTime:
+            type: string
+            format: dateTime
+        completionTime:
+            type: string
+            format: dateTime
+        successRate:
+          type: integer
+    Player:
+      type: object
+      required:
+        - player_id
+        - firstname
+        - surname
+        - age
+        - education
+      properties:
+        player_id:
+          type: integer
+        firstname:
+            type: string
+        surname:
+            type: string
+        age:
+            type: integer
+        education:
+            type: string
+    teamInfo:
+        type : object
+        required:
+            - test_id
+            - player_id
+        properties:
+            test_id:
+                type: integer
+            player_id:
+                type: integer
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+          format: int32
+        message:
+          type: string
